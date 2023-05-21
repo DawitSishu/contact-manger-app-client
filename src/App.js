@@ -6,10 +6,6 @@ import Home from './Components/Home/Home';
 import { useState } from 'react';
 
 function App() {
-  const hasuserLoggedIN = () => {
-     let token = localStorage.getItem('token')
-     return token;
-  }
   const [loggedIn, SetLoggedIn] = useState(false);
   const handleLogIn = () =>{
       SetLoggedIn(true)
@@ -17,9 +13,6 @@ function App() {
   const handleLogOut = () =>{
       SetLoggedIn(false)
   } 
-  // if(hasuserLoggedIN()){
-  //   localStorage.clear()
-  // }
   return (
     <BrowserRouter>
     <Routes>

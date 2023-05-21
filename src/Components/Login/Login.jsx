@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material"
+import { Grid,Typography } from "@mui/material"
 import axios from "axios"
 import { useState } from "react"
 import LoginForm from "./LoginForm"
@@ -42,6 +42,8 @@ function Login(props) {
     
   
   >
+     <Typography  variant="h2" color="white">Contact Manager App </Typography>
+     <Typography  variant="subtitle1" color="white" sx={{backgroundColor:"blue"}}>create an account or sign-in if you already have one, and add and manage your contacts</Typography>
     <Grid item xs={3}>
      {isDisabled ? <Spinner /> : <LoginForm  onSubmit = {handleUserData}  err={err} />}
     </Grid>
