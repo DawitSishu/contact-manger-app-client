@@ -14,8 +14,17 @@ function SignUpForm(props) {
     const [showPassword, setShowPassword] = React.useState(false);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => props.onSubmit(data);
-
+    const onSubmit = data => {
+      console.log(data);
+      const validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email)
+      console.log(validEmail);
+      if(validEmail){
+        console.log('suuu');
+        // props.onSubmit(data)
+      }else{
+        console.log('fk')
+      }
+    };
 
   return (
     <Box  
@@ -23,8 +32,6 @@ function SignUpForm(props) {
       borderRadius:5,
       boxShadow: "10px 10px 10px 10px grey",
       color:"white",
-      // boxShadow: '17px 17px 18px 12px rgb(0 0 0 /20%),17px 17px 18px 12px rgb(0 0 0 /20%),17px 17px 18px 12px rgb(0 0 0 /20%)',
-      // boxShadow: '10px 17px 18px 14px rgb(0 0 0 / 20%), 10px 17px 18px 12px rgb(0 0 0 / 20%), 10px 15px 22px 14px rgb(0 0 0 / 20%),10px 17px 18px 12px rgb(0 0 0 / 20%)',
       margin: 10,
       padding: 10,
     }}  
@@ -32,6 +39,9 @@ function SignUpForm(props) {
       onSubmit={handleSubmit(onSubmit)}>
         <Typography variant='h5'>Create a New Account</Typography>
         <br />
+        <Typography color="red" variant='h7'>{props.err}</Typography>
+        
+        <br/> <br/>
         <OutlinedInput 
         sx={{
           color:"white",
@@ -53,7 +63,7 @@ function SignUpForm(props) {
         />
              <br />
              {errors.email && <Typography color="white" variant='h7'>{errors.username.message}</Typography>}
-        <br />
+        <br /> 
         <OutlinedInput 
         sx={{
           color:"white",

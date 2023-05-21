@@ -4,12 +4,21 @@ import axios from "axios"
 import { useState } from "react"
 import background from "../../Assets/bg.jpg"
 
+
+const BASE_URI = "https://contactmanager-7r4s.onrender.com/api/users/register"
+
 function SignUp() {
     const [userData,setUserData] = useState({})
+    const [err,setErr] = useState('')
 
-    const handleUserData = (data) => {
-        console.log(data)
-        setUserData(data)
+    const handleUserData = async (data) => {
+      try {
+        setErr('')
+        const response = await axios.post(BASE_URI,{...data})   
+        console.log(response)
+      } catch (error) {
+        setErr(error.response.data.message)
+      }
     }
   return (
     <Grid
@@ -29,7 +38,7 @@ function SignUp() {
   
   >
     <Grid item xs={3}>
-     <SignUpForm  onSubmit = {handleUserData}/>
+     <SignUpForm  onSubmit = {handleUserData} err={err}/>
     </Grid>
   </Grid>
   )

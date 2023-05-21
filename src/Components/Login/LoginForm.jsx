@@ -24,8 +24,6 @@ function LoginForm(props) {
       borderRadius:5,
       boxShadow: "10px 10px 10px 10px grey",
       color:"white",
-      // boxShadow: '17px 17px 18px 12px rgb(0 0 0 /20%),17px 17px 18px 12px rgb(0 0 0 /20%),17px 17px 18px 12px rgb(0 0 0 /20%)',
-      // boxShadow: '10px 17px 18px 14px rgb(0 0 0 / 20%), 10px 17px 18px 12px rgb(0 0 0 / 20%), 10px 15px 22px 14px rgb(0 0 0 / 20%),10px 17px 18px 12px rgb(0 0 0 / 20%)',
       margin: 10,
       padding: 10,
     }}  
@@ -33,6 +31,9 @@ function LoginForm(props) {
       onSubmit={handleSubmit(onSubmit)}>
         <Typography variant='h5'>Sign In to your Account</Typography>
         <br />
+        <Typography color="red" variant='h7'>{props.err}</Typography>
+        
+        <br/> <br/>
         <OutlinedInput 
         sx={{
           color:"white",
@@ -83,9 +84,9 @@ function LoginForm(props) {
              <br />
              {errors.password && <Typography color="White" variant='h7'>{errors.password.message}</Typography>}
              <br />
-        <Button type='submit' variant='contained' >Sign In</Button>
+        <Button type='submit' variant='contained' disabled={props.disabled} >Sign In</Button>
         <Link to={'/signup'}>
-          <Button type='submit' variant='outlined' sx={{color:"white", marginLeft:10}} >Create Account</Button>
+          <Button type='submit' variant='outlined' sx={{color:"white", marginLeft:10}}  disabled={props.disabled} >Create Account</Button>
         </Link>
     </Box>
   )
