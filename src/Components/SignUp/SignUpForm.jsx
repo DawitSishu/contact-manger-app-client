@@ -1,4 +1,4 @@
-import { Button, Card,TextField, Typography } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import { useForm } from "react-hook-form";
 import { Box } from '@mui/system'
 import React from 'react'
@@ -20,7 +20,7 @@ function SignUpForm(props) {
       console.log(validEmail);
       if(validEmail){
         console.log('suuu');
-        // props.onSubmit(data)
+        props.onSubmit(data)
       }else{
         console.log('fk')
       }

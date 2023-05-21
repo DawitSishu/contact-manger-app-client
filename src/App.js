@@ -17,9 +17,9 @@ function App() {
   const handleLogOut = () =>{
       SetLoggedIn(false)
   } 
-  if(hasuserLoggedIN()){
-    localStorage.clear()
-  }
+  // if(hasuserLoggedIN()){
+  //   localStorage.clear()
+  // }
   return (
     <BrowserRouter>
     <Routes>

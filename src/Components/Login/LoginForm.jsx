@@ -86,7 +86,7 @@ function LoginForm(props) {
              <br />
         <Button type='submit' variant='contained' disabled={props.disabled} >Sign In</Button>
         <Link to={'/signup'}>
-          <Button type='submit' variant='outlined' sx={{color:"white", marginLeft:10}}  disabled={props.disabled} >Create Account</Button>
+          <Button type='submit' variant='outlined' sx={{color:"white", marginLeft:10}}   >Create Account</Button>
         </Link>
     </Box>
   )
