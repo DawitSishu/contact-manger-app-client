@@ -1,6 +1,9 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Client side implementation of the contact manager api  
+
+## Contact manager api:
+https://github.com/DawitSishu/ContactManagerApp
 
 ## Available Scripts
 
