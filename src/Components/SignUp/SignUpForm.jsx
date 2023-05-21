@@ -15,14 +15,11 @@ function SignUpForm(props) {
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
-      console.log(data);
       const validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email)
-      console.log(validEmail);
       if(validEmail){
-        console.log('suuu');
         props.onSubmit(data)
       }else{
-        console.log('fk')
+        alert(`${data.email} is not a valid email`)
       }
     };
 
@@ -62,7 +59,7 @@ function SignUpForm(props) {
               } 
         />
              <br />
-             {errors.email && <Typography color="white" variant='h7'>{errors.username.message}</Typography>}
+             {errors.email && <Typography color="white" variant='h7'>{errors.email.message}</Typography>}
         <br /> 
         <OutlinedInput 
         sx={{

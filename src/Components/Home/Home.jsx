@@ -1,17 +1,19 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { Grid, Typography,Button } from "@mui/material"
+import { Grid, Typography,Button,List,ListItemAvatar,ListItemText,Avatar,ListItem} from "@mui/material"
 import background from "../../Assets/bg.jpg"
 import Spinner from "../Spinner/Spinner"
 import { Container } from "@mui/system"
-import { AccountCircle } from "@mui/icons-material"
+import { AccountCircle, ContactEmergency } from "@mui/icons-material"
 import CreateContact from "../Contacts/CreateContact"
 
 
 const BASE_URI = "https://contactmanager-7r4s.onrender.com/api/contacts"
-function Home(props) {
+function Home (props) {
+    const [userName,setUserName] = useState('')
     const [contacts,setContacts] = useState([])
-    const [isDisabled,setIsDisabled] = useState(true)
+    const [err,setErr] = useState('')
+    const [isDisabled,setIsDisabled] = useState(false) //
     const [createcontactForm,setCreateContactForm] = useState(false)
     const handleSignout =()=>{
         localStorage.clear()
@@ -24,25 +26,52 @@ function Home(props) {
       }
       const getUserContacts = async () =>{
         try {
+            setErr('')
             const respose =  await axios.get(
                 BASE_URI,
                 config
             )
             if(respose){
+                
                 setIsDisabled(false)
                 setContacts([...respose.data])   
             }
         } catch (error) {
-            alert(error.respose.message)
+            setErr(error.respose.message)
         }
       }
-      useEffect(()=>{
-            getUserContacts()
+      useEffect( ()=>{
+        const user = async()=>{
+            const res = await axios.get("https://contactmanager-7r4s.onrender.com/api/users/current",config)
+            setUserName(res.data.username)
+        }
+        user()
+        getUserContacts()
       },[])
 
-    const handleCreateContact = () =>{
+    const handleContactForm = () =>{
         setCreateContactForm(!createcontactForm)
     }
+
+    const handleCreateContact = async (data) =>{
+        setCreateContactForm(false)
+        setIsDisabled(true)
+        try {
+            setErr('')
+            const respose =  await axios.post(
+                BASE_URI,
+                {...data},
+                config
+            )
+            if(respose){
+                setIsDisabled(false)
+                setContacts([...contacts,data]) 
+            }
+        } catch (error) {
+            setErr(error.respose.message)
+        }
+    }
+
 
 
   return (
@@ -60,26 +89,40 @@ function Home(props) {
       backgroundPosition: 'center',
     }}
   >
-    {/* don't forget this */}
-    {/* <Typography>Welcome : {username}</Typography> */}
-    <Typography variant="h2" color="white">Home</Typography>
-    {createcontactForm ? <CreateContact /> : null }
-    <Grid item xs={3}>
-     {isDisabled ? <Spinner /> : 
-     <Container> 
+    <Typography  variant="h2" color="white">Welcome : {userName}</Typography>
+    {createcontactForm ? <CreateContact cancel={handleContactForm}  err={err} onSubmit = {handleCreateContact}/> 
+                        : isDisabled ? <Spinner /> 
+                        :<Grid> 
         <Button onClick={handleSignout} variant="contained">sign out</Button> <br /><br />
         <Button 
-            onClick={handleCreateContact} 
+            onClick={handleContactForm} 
             variant="contained" 
          >
                 <AccountCircle />
-                {createcontactForm ? "cancel"  :"Add Contact"}
+                Add Contact
                 </Button>
-       
-      </Container>
-    }
+      </Grid>    
+}   
+{!isDisabled && contacts.length > 0 ? <List sx={{color:"white"}}>
+      {contacts.map((contact,index) => {
+        return(
+        <ListItem key={index}>
+        <ListItemAvatar>
+          <Avatar style={{backgroundColor:"black"}}>
+             <AccountCircle /> 
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary ={contact.name} style={{marginRight:10}}/>
+        <ListItemText 
+        secondaryTypographyProps={{color:"white",variant:"body1"}}
+         primary={contact.phone}  
+         secondary={contact.email}
+         title={contact.name}/>
+      </ListItem>
+        )
+    })}
+    </List> : null}
     </Grid>
-  </Grid>
    
 
   )
